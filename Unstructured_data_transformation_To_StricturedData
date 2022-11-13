@@ -1,0 +1,50 @@
+# importing the necessary libraries
+
+from pyspark import SparkConf
+from pyspark.sql import SparkSession
+from pyspark.sql import functions
+# setting the spark conf 
+my_conf=SparkConf()
+my_conf.set("spark.app.name","my_first_application")
+my_conf.set("spark.master","local[*]")
+# starting the spaark session
+spark=SparkSession.builder.config(conf=my_conf).getOrCreate()
+# convert unstructured data to structured data
+linesdf=spark.read.text("file:///home/itv003334/order_new.txt")
+linesdf.show()
+linesdf.printSchema()
+# regex expression
+regex=r'^(\S+) (\S+)\t(\S+)\,(\S+)'
+# now splitting the column based on regex expression
+# now splitting the column based on regex expression
+import pyspark.sql.functions.regexp_extract
+fielddf=linesdf.select(regexp_extract('value',regex,1).alias("order_id"),# importing the necessary libraries
+from pyspark import SparkConf
+from pyspark.sql import SparkSession
+# setting the spark conf 
+my_conf=SparkConf()
+my_conf.set("spark.app.name","my_first_application")
+my_conf.set("spark.master","local[*]")
+# starting the spaark session
+spark=SparkSession.builder.config(conf=my_conf).getOrCreate()
+# convert unstructured data to structured data
+linesdf=spark.read.text("file:///home/itv003334/order_new.txt")
+linesdf.show()
+linesdf.printSchema()
+# regex expression
+regex=r'^(\S+) (\S+)\t(\S+)\,(\S+)'
+# now splitting the column based on regex expression
+# now splitting the column based on regex expression
+from pyspark.sql.functions import regexp_extract, col
+                       
+# using the regex express splitting our unstructured dsta to structured form
+                       
+fielddf=linesdf.select(regexp_extract('value',regex,1).alias("order_id"),regexp_extract('value',regex,2).alias("date"),regexp_extract('value',regex,3).alias("customer_id"),regexp_extract('value',regex,4).alias("status"))
+# checking whether the data has been inserted or not
+                       
+fielddf.show()
+# checking for the schema of the data
+fielddf.printSchema()
+
+                    
+                       
